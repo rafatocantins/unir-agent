@@ -100,6 +100,7 @@ def main():
         date = fact.get("metadata", {}).get("verified_date", "?")
         entity = fact.get("metadata", {}).get("entity", "?")
         category = fact.get("metadata", {}).get("category", "?")
+        fiab = fact.get("metadata", {}).get("fiabilidade", "⚪")
         label, months = classify_staleness(date)
         stats[label] += 1
         
@@ -107,7 +108,7 @@ def main():
             continue
         
         mem = fact["memory"][:100]
-        print(f"  {label:30s} [{entity:8s}] [{category:15s}] {date} | {mem}")
+        print(f"  {fiab} {label:30s} [{entity:8s}] [{category:15s}] {date} | {mem}")
     
     print(f"\n📊 Distribuição: {dict(stats)}")
     

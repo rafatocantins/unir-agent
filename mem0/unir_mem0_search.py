@@ -93,11 +93,12 @@ def main():
     for r in results[:args.limit]:
         date = r.get("metadata", {}).get("verified_date", "?")
         ent = r.get("metadata", {}).get("entity", "?")
+        fiab = r.get("metadata", {}).get("fiabilidade", "⚪")
         source = r.get("metadata", {}).get("source", "?")
         mem = r["memory"]
         age_icon = classify(date)[:2]
 
-        print(f"  {age_icon} [{ent}] [{date}] {mem[:150]}")
+        print(f"  {fiab} {age_icon} [{ent}] [{date}] {mem[:150]}")
         print(f"     Fonte: {source}")
         print()
 
