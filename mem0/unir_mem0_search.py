@@ -19,7 +19,20 @@ from datetime import datetime, timedelta
 os.environ["MEM0_TELEMETRY"] = "false"
 from mem0 import MemoryClient
 
-API_KEY = os.environ.get("MEM0_API_KEY", "REDACTED")
+# Carregar .env se existir
+from pathlib import Path
+_env_path=Path(__file__).resolve().parent.parent / ".env"
+if _env_path.exists():
+    with open(_env_path) as f:
+        for line in f:
+            line=line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k,v=line.split("=",1)
+                os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+API_KEY=os.environ.get("MEM0_API_KEY")
+if not API_KEY:
+    raise RuntimeError("MEM0_API_KEY nao definida. Cria .env ou exporta a variavel.")
 USER_ID = "unir-agent"
 
 # Thresholds: Q atual = ultimos 90 dias, Q anterior = 90-180 dias
